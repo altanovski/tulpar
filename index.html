@@ -1,0 +1,805 @@
+```html
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tulpar Havacılık Topluluğu</title>
+  <meta name="description" content="Türkiye genelinde havacılığı yaygınlaştıran, öğrenci ve profesyonelleri buluşturan Tulpar Havacılık Topluluğu." />
+
+  <style>
+    :root{
+      --bg:#0b1220;
+      --bg2:#0e1a33;
+      --card:#111b31;
+      --text:#e8eefc;
+      --muted:#a9b6d6;
+      --line:rgba(255,255,255,.10);
+      --accent:#7dd3fc;
+      --accent2:#a78bfa;
+      --good:#34d399;
+      --warn:#fbbf24;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+      --radius: 18px;
+      --max: 1100px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 600px at 20% 0%, rgba(125,211,252,.18), transparent 60%),
+        radial-gradient(900px 500px at 80% 10%, rgba(167,139,250,.16), transparent 55%),
+        linear-gradient(180deg, var(--bg), #070b14);
+    }
+
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    .pill{
+      display:inline-flex; gap:8px; align-items:center;
+      padding:8px 12px; border:1px solid var(--line);
+      border-radius:999px; color:var(--muted);
+      background: rgba(255,255,255,.04);
+      backdrop-filter: blur(8px);
+      font-size:13px;
+    }
+    .pill.soon{
+      border-color: rgba(251,191,36,.35);
+      background: rgba(251,191,36,.08);
+      color: #ffe9b0;
+    }
+
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50;
+      background: rgba(7,11,20,.55);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:800; letter-spacing:.2px;
+      min-width: 170px;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(125,211,252,.9), rgba(167,139,250,.9));
+      box-shadow: var(--shadow);
+      display:grid; place-items:center;
+      color:#081023;
+      font-weight:900;
+    }
+    .links{display:flex; gap:16px; align-items:center}
+    .links a{
+      color:var(--muted);
+      padding:8px 10px;
+      border-radius:10px;
+    }
+    .links a:hover{background: rgba(255,255,255,.06); color:var(--text)}
+    .cta{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:10px 14px;
+      border-radius:12px;
+      background: linear-gradient(135deg, rgba(125,211,252,.95), rgba(167,139,250,.95));
+      color:#071022;
+      font-weight:800;
+      border:0;
+      cursor:pointer;
+      box-shadow: var(--shadow);
+      white-space: nowrap;
+    }
+    .burger{
+      display:none;
+      background: transparent;
+      border:1px solid var(--line);
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      cursor:pointer;
+    }
+
+    /* Hero */
+    .hero{padding:54px 0 24px}
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .h-card{
+      border:1px solid var(--line);
+      background: linear-gradient(180deg, rgba(17,27,49,.85), rgba(17,27,49,.55));
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .h-main{padding:26px}
+    h1{
+      margin:12px 0 10px;
+      font-size:42px;
+      line-height:1.08;
+      letter-spacing:-.6px;
+    }
+    .lead{color:var(--muted); font-size:16px; line-height:1.6; max-width:62ch}
+    .hero-actions{display:flex; gap:12px; margin-top:18px; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:11px 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.06);
+      color:var(--text);
+      font-weight:700;
+      cursor:pointer;
+    }
+    .btn:hover{background: rgba(255,255,255,.10)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(125,211,252,.95), rgba(167,139,250,.95));
+      color:#071022;
+      border:0;
+    }
+    .hero-badges{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:18px
+    }
+    .side{
+      padding:22px;
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+    .side h3{margin:0; font-size:16px}
+    .kpi{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+    }
+    .kpi .mini{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background: rgba(255,255,255,.04);
+    }
+    .mini .n{font-weight:900; font-size:20px}
+    .mini .t{color:var(--muted); font-size:12px; margin-top:2px}
+
+    .note{
+      border:1px dashed rgba(125,211,252,.35);
+      background: rgba(125,211,252,.06);
+      border-radius:14px;
+      padding:12px;
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.5;
+    }
+    .note.soon{
+      border-color: rgba(251,191,36,.38);
+      background: rgba(251,191,36,.08);
+      color: #ffe9b0;
+    }
+    .note strong{color: var(--text)}
+
+    /* Hero brand image */
+    .hero-brand{
+      display:flex;
+      justify-content:center;
+      margin-bottom:16px;
+    }
+    .hero-brand img{
+      width:min(520px, 100%);
+      height:auto;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      background: rgba(255,255,255,.03);
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,.35));
+    }
+
+    /* Sections */
+    section{padding:26px 0}
+    .section-title{
+      display:flex; align-items:end; justify-content:space-between;
+      gap:16px; margin-bottom:14px;
+    }
+    .section-title h2{
+      margin:0; font-size:22px; letter-spacing:-.2px;
+    }
+    .section-title p{margin:0; color:var(--muted); max-width:65ch}
+
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .card{
+      border:1px solid var(--line);
+      background: rgba(17,27,49,.55);
+      border-radius: var(--radius);
+      padding:16px;
+      box-shadow: var(--shadow);
+    }
+    .tag{
+      display:inline-flex;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:12px;
+      background: rgba(255,255,255,.04);
+    }
+    .tag.soon{
+      border-color: rgba(251,191,36,.35);
+      background: rgba(251,191,36,.08);
+      color:#ffe9b0;
+    }
+    .card h3{margin:10px 0 6px; font-size:16px}
+    .card p{margin:0; color:var(--muted); line-height:1.55}
+
+    /* Events */
+    .toolbar{
+      display:flex; gap:10px; flex-wrap:wrap;
+      align-items:center; justify-content:space-between;
+      margin:10px 0 12px;
+    }
+    .search{
+      flex: 1 1 260px;
+      display:flex; align-items:center; gap:10px;
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:10px 12px;
+      background: rgba(255,255,255,.04);
+    }
+    .search input{
+      width:100%;
+      border:0;
+      outline:none;
+      background: transparent;
+      color: var(--text);
+      font-size:14px;
+    }
+    .filters{display:flex; gap:10px; flex-wrap:wrap}
+    select{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius:14px;
+      outline:none;
+    }
+    .list{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .meta{
+      display:flex; gap:10px; flex-wrap:wrap;
+      color: var(--muted); font-size:12px; margin-top:10px;
+    }
+    .meta span{display:inline-flex; gap:6px; align-items:center}
+
+    /* Contact */
+    .contact{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:14px;
+    }
+    .form{
+      display:grid; gap:10px;
+    }
+    .form input, .form textarea{
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      color: var(--text);
+      padding:12px 12px;
+      border-radius:14px;
+      outline:none;
+      font-size:14px;
+    }
+    .form textarea{min-height:120px; resize:vertical}
+
+    footer{
+      padding:22px 0 36px;
+      border-top:1px solid var(--line);
+      color: var(--muted);
+      font-size:13px;
+    }
+    .foot{
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      align-items:center;
+    }
+    .social{display:flex; gap:10px}
+    .social a{
+      border:1px solid var(--line);
+      padding:8px 10px;
+      border-radius:12px;
+      background: rgba(255,255,255,.04);
+    }
+
+    /* Mobile */
+    @media (max-width: 940px){
+      .hero-grid{grid-template-columns: 1fr}
+      .grid3{grid-template-columns: 1fr}
+      .list{grid-template-columns: 1fr}
+      .contact{grid-template-columns: 1fr}
+      h1{font-size:34px}
+      .links{display:none}
+      .burger{display:inline-flex}
+      .mobile{
+        display:none;
+        padding: 0 0 14px;
+      }
+      .mobile a{
+        display:block;
+        padding:10px 12px;
+        border-radius:12px;
+        color: var(--muted);
+      }
+      .mobile a:hover{background: rgba(255,255,255,.06); color:var(--text)}
+      .mobile .cta{width:100%; justify-content:center}
+    }
+  </style>
+</head>
+
+<body>
+  <!--
+    KURULUM:
+    1) Bu dosyayı index.html olarak kaydet.
+    2) Paylaştığın görseli şu yola koy: /assets/tulpar.jpg
+    3) GitHub Pages'e atabilir veya direkt tarayıcıda açabilirsin.
+  -->
+
+  <header>
+    <div class="container">
+      <div class="nav">
+        <a class="brand" href="#top">
+          <span class="logo">T</span>
+          <span>Tulpar Havacılık</span>
+        </a>
+
+        <nav class="links" aria-label="Ana Menü">
+          <a href="#about">Hakkımızda</a>
+          <a href="#programs">Programlar</a>
+          <a href="#events">Etkinlikler</a>
+          <a href="#trainings">Eğitimler</a>
+          <a href="#contact">İletişim</a>
+        </nav>
+
+        <button class="burger" id="burger" aria-label="Menü">☰</button>
+        <a class="cta" href="#join">Topluluğa Katıl</a>
+      </div>
+
+      <div class="mobile" id="mobileMenu" aria-label="Mobil Menü">
+        <a href="#about">Hakkımızda</a>
+        <a href="#programs">Programlar</a>
+        <a href="#events">Etkinlikler</a>
+        <a href="#trainings">Eğitimler</a>
+        <a href="#contact">İletişim</a>
+        <a class="cta" href="#join">Topluluğa Katıl</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <div class="container hero">
+      <div class="hero-grid">
+
+        <div class="h-card">
+          <div class="h-main">
+
+            <!-- Girişte logo görseli -->
+            <div class="hero-brand">
+              <img src="assets/tulpar.jpg" alt="Tulpar Havacılık Topluluğu görseli">
+            </div>
+
+            <span class="pill">🐎 Türkiye genelinde havacılık ekosistemi • Zirve • Eğitim • Network</span>
+
+            <!-- İzmir etkinliği: Çok Yakında -->
+            <div style="margin-top:10px">
+              <span class="pill soon">⚡ Çok Yakında: Tulpar Havacılık Zirvesi — İzmir Bakırçay Üniversitesi</span>
+            </div>
+
+            <h1>Havacılık merakını, sektörel değere dönüştüren topluluk.</h1>
+
+            <p class="lead">
+              Tulpar Havacılık Topluluğu; öğrencileri, profesyonelleri ve akademiyi bir araya getirerek havacılığı
+              daha fazla insana tanıtmayı, kalifiye eğitimler üretmeyi ve ülke çapında sürdürülebilir bir değer
+              platformu kurmayı hedefler.
+            </p>
+
+            <div class="hero-actions">
+              <a class="btn primary" href="#events">Etkinlikleri Gör</a>
+              <a class="btn" href="#trainings">Eğitim Kataloğu</a>
+              <a class="btn" href="#contact">Sponsor / İş Birliği</a>
+            </div>
+
+            <div class="hero-badges">
+              <span class="pill">✈️ Öğrenci + Profesyonel</span>
+              <span class="pill">🎓 Kalifiye Eğitimler</span>
+              <span class="pill">🧠 Mentorluk & Kariyer</span>
+              <span class="pill">🛰️ İHA / Uzay / Motor</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="h-card">
+          <div class="side">
+            <h3>Yakında duyurulacak etkinlik</h3>
+
+            <div class="note soon">
+              <strong>Çok Yakında:</strong> Tulpar Havacılık Zirvesi, <strong>İzmir Bakırçay Üniversitesi</strong>’nde
+              gerçekleşecek. Tarih ve kayıt formu açıldığında burada yayınlanacak.
+            </div>
+
+            <div class="kpi">
+              <div class="mini">
+                <div class="n" id="kpiMembers">250+</div>
+                <div class="t">Topluluk ağı</div>
+              </div>
+              <div class="mini">
+                <div class="n" id="kpiEvents">12</div>
+                <div class="t">Yıllık etkinlik hedefi</div>
+              </div>
+              <div class="mini">
+                <div class="n" id="kpiCities">6</div>
+                <div class="t">Şehirde temsil hedefi</div>
+              </div>
+              <div class="mini">
+                <div class="n" id="kpiHours">40+</div>
+                <div class="t">Eğitim saatleri</div>
+              </div>
+            </div>
+
+            <div class="note">
+              📌 Not: Bu sayılar “placeholder”. Gerçek verileri girince site daha güven veren bir kimliğe oturur.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about">
+      <div class="container">
+        <div class="section-title">
+          <h2>Hakkımızda</h2>
+          <p>
+            Tulpar; havacılığı sadece izlenen bir şey olmaktan çıkarıp öğrenilen, paylaşılan ve üretilen bir alana dönüştürür.
+          </p>
+        </div>
+
+        <div class="grid3">
+          <div class="card">
+            <span class="tag">Vizyon</span>
+            <h3>Ulusal bir havacılık platformu</h3>
+            <p>
+              Türkiye genelinde öğrencileri, sektörü ve akademiyi buluşturan; kalite standardı yüksek, sürdürülebilir bir ekosistem.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="tag">Misyon</span>
+            <h3>Eğitim + etkinlik + bağ kurma</h3>
+            <p>
+              Havacılığı daha geniş kitlelere tanıtmak, kalifiye eğitimler düzenlemek ve profesyonel ağları güçlendirmek.
+            </p>
+          </div>
+
+          <div class="card">
+            <span class="tag">Değerler</span>
+            <h3>Kalite, şeffaflık, topluluk</h3>
+            <p>
+              Bilgiye saygı, ölçülebilir çıktı, kapsayıcı kültür ve sürdürülebilir organizasyon disiplini.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROGRAMS -->
+    <section id="programs">
+      <div class="container">
+        <div class="section-title">
+          <h2>Programlarımız</h2>
+          <p>Her program “tek seferlik etkinlik” değil; tekrar edilebilir format + ölçülebilir çıktı ile tasarlanır.</p>
+        </div>
+
+        <div class="grid3">
+          <div class="card">
+            <span class="tag">Zirve & Konferans</span>
+            <h3>Tulpar Havacılık Zirvesi</h3>
+            <p>Keynote + panel + teknik atölye + kariyer alanı. Öğrenci–sektör aynı zeminde.</p>
+          </div>
+          <div class="card">
+            <span class="tag">Eğitim</span>
+            <h3>Kalifiye Eğitim Serileri</h3>
+            <p>Temel havacılık, bakım, operasyon, sürdürülebilir havacılık, proje yönetimi ve soft-skill modülleri.</p>
+          </div>
+          <div class="card">
+            <span class="tag">Kariyer & Network</span>
+            <h3>Mentorluk ve Fırsatlar</h3>
+            <p>Mentor havuzu, CV/LinkedIn klinikleri, sektör buluşmaları, staj & proje yönlendirmeleri.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- EVENTS -->
+    <section id="events">
+      <div class="container">
+        <div class="section-title">
+          <h2>Etkinlikler</h2>
+          <p>İzmir etkinliği “çok yakında” olarak listede sabitlenmiştir. Diğerleri örnek içeriktir.</p>
+        </div>
+
+        <div class="toolbar">
+          <div class="search">
+            🔎 <input id="q" placeholder="Etkinlik ara (örn: zirve, bakım, motor, SAF)..." />
+          </div>
+          <div class="filters">
+            <select id="type">
+              <option value="all">Tümü</option>
+              <option value="zirve">Zirve</option>
+              <option value="panel">Panel</option>
+              <option value="atolye">Atölye</option>
+              <option value="network">Network</option>
+            </select>
+            <select id="mode">
+              <option value="all">Format</option>
+              <option value="online">Online</option>
+              <option value="yuz_yuze">Yüz yüze</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="list" id="eventList"></div>
+      </div>
+    </section>
+
+    <!-- TRAININGS -->
+    <section id="trainings">
+      <div class="container">
+        <div class="section-title">
+          <h2>Eğitim Kataloğu</h2>
+          <p>Modüler yapı: kısa programlar + sertifika + uygulama ödevi. (Şimdilik örnek.)</p>
+        </div>
+
+        <div class="grid3">
+          <div class="card">
+            <span class="tag">Temel</span>
+            <h3>Genel Havacılık 101</h3>
+            <p>Havacılık sistemleri, operasyon, güvenlik kültürü, sektör haritası. Yeni başlayanlar için.</p>
+          </div>
+          <div class="card">
+            <span class="tag">Teknik</span>
+            <h3>Uçak Bakım & Sistemler</h3>
+            <p>ATA mantığı, bakım kültürü, dokümantasyon, kalite ve güvenlik. “Saha dili” ile anlatım.</p>
+          </div>
+          <div class="card">
+            <span class="tag">Gelecek</span>
+            <h3>Sürdürülebilir Havacılık (SAF)</h3>
+            <p>SAF nedir, tedarik zinciri, sertifikasyon mantığı, iklim etkisi, operasyonel kullanım senaryoları.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JOIN -->
+    <section id="join">
+      <div class="container">
+        <div class="section-title">
+          <h2>Topluluğa Katıl</h2>
+          <p>Üyelik / ekip başvurusu / konuşmacı-mentor başvurusu için tek form. (Şimdilik mail yönlendirme.)</p>
+        </div>
+
+        <div class="card">
+          <p style="margin:0 0 12px; color:var(--muted); line-height:1.7">
+            👉 “Katıl” butonunu Google Form / Typeform / Tally ile bağlamak en pratik yol.
+          </p>
+          <a class="btn primary" href="mailto:info@tulparhavacilik.org?subject=Tulpar%20Kat%C4%B1l%C4%B1m%20Ba%C5%9Fvurusu">
+            Başvur (E-posta)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="container">
+        <div class="section-title">
+          <h2>İletişim</h2>
+          <p>Sponsor, iş birliği veya zirve katılımı için yazın. (Demo form.)</p>
+        </div>
+
+        <div class="contact">
+          <div class="card">
+            <h3 style="margin:0 0 10px">İletişim Bilgileri</h3>
+            <p style="margin:0; color:var(--muted); line-height:1.7">
+              📧 info@tulparhavacilik.org<br/>
+              🌐 tulparhavacilik.org (domain alınca)<br/>
+              🇹🇷 Türkiye (ulusal yapılanma)<br/>
+            </p>
+
+            <div class="meta">
+              <span>✅ Sponsor dosyası: hazırlanıyor</span>
+              <span>✅ Medya kiti: hazırlanıyor</span>
+              <span>✅ Konuşmacı havuzu: açık</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3 style="margin:0 0 10px">Hızlı Mesaj</h3>
+            <form class="form" id="contactForm">
+              <input name="name" placeholder="Ad Soyad" required />
+              <input name="email" type="email" placeholder="E-posta" required />
+              <textarea name="message" placeholder="Mesajınız..." required></textarea>
+              <button class="btn primary" type="submit">Gönder</button>
+              <div id="formMsg" style="color:var(--muted); font-size:13px;"></div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="foot">
+        <div>© <span id="year"></span> Tulpar Havacılık Topluluğu • Tüm hakları saklıdır.</div>
+        <div class="social">
+          <a href="#" aria-label="LinkedIn">LinkedIn</a>
+          <a href="#" aria-label="Instagram">Instagram</a>
+          <a href="#" aria-label="YouTube">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const burger = document.getElementById("burger");
+    const mobileMenu = document.getElementById("mobileMenu");
+    burger?.addEventListener("click", () => {
+      const isOpen = mobileMenu.style.display === "block";
+      mobileMenu.style.display = isOpen ? "none" : "block";
+    });
+
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Events data (İzmir etkinliği dahil)
+    // Not: İzmir zirvesi "Çok Yakında" olduğu için tarih TBD (netleşince doldurursunuz).
+    const events = [
+      {
+        title: "Tulpar Havacılık Zirvesi (Çok Yakında)",
+        type: "zirve",
+        mode: "yuz_yuze",
+        date: null,
+        city: "İzmir Bakırçay Üniversitesi",
+        desc: "Türkiye genelinden öğrenciler ve profesyonelleri buluşturacak zirve. Kayıt ve tarih duyurusu çok yakında."
+      },
+      {
+        title:"Uçak Bakımında Dokümantasyon & Kalite",
+        type:"atolye",
+        mode:"online",
+        date:"2026-03-12",
+        city:"Online",
+        desc:"ATA mantığı, bakım dokümanları, kalite kültürü ve örnek vaka."
+      },
+      {
+        title:"Sürdürülebilir Havacılık ve SAF",
+        type:"panel",
+        mode:"online",
+        date:"2026-03-25",
+        city:"Online",
+        desc:"SAF tedariki, sertifikasyon, maliyet ve iklim etkisi."
+      },
+      {
+        title:"Mentor–Mentee Network Night",
+        type:"network",
+        mode:"yuz_yuze",
+        date:"2026-03-30",
+        city:"Türkiye (Şehir duyurulacak)",
+        desc:"Sektör profesyonelleri ile öğrenciler için eşleşmeli networking."
+      },
+      {
+        title:"Motor Sistemleri: Temelden Endüstriye",
+        type:"panel",
+        mode:"online",
+        date:"2026-04-05",
+        city:"Online",
+        desc:"Gaz türbinleri, bakım perspektifi ve kariyer yolları."
+      },
+      {
+        title:"Proje Yönetimi: Teknofest & Ar-Ge Takımları",
+        type:"atolye",
+        mode:"online",
+        date:"2026-04-10",
+        city:"Online",
+        desc:"Takım içi süreç, görev takibi, sunum & dokümantasyon."
+      }
+    ];
+
+    const listEl = document.getElementById("eventList");
+    const qEl = document.getElementById("q");
+    const typeEl = document.getElementById("type");
+    const modeEl = document.getElementById("mode");
+
+    function render(){
+      const q = (qEl.value || "").toLowerCase().trim();
+      const t = typeEl.value;
+      const m = modeEl.value;
+
+      const filtered = events.filter(e => {
+        const matchQ = !q || (e.title + " " + e.desc + " " + e.city).toLowerCase().includes(q);
+        const matchT = (t === "all") || e.type === t;
+        const matchM = (m === "all") || e.mode === m;
+        return matchQ && matchT && matchM;
+      });
+
+      listEl.innerHTML = filtered.map((e, idx) => `
+        <div class="card">
+          <span class="tag ${idx===0 ? "soon" : ""}">
+            ${labelType(e.type)} • ${labelMode(e.mode)}${idx===0 ? " • Çok Yakında" : ""}
+          </span>
+          <h3>${escapeHtml(e.title)}</h3>
+          <p>${escapeHtml(e.desc)}</p>
+          <div class="meta">
+            <span>📅 ${e.date ? formatDate(e.date) : "Tarih: Çok yakında"}</span>
+            <span>📍 ${escapeHtml(e.city)}</span>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+            <a class="btn ${idx===0 ? "primary" : ""}" href="#join">${idx===0 ? "Ön Kayıt / İlgi Formu" : "Katıl"}</a>
+            <a class="btn" href="#contact">Konuşmacı/Sponsor</a>
+          </div>
+        </div>
+      `).join("") || `<div class="card">Kriterlere uyan etkinlik bulunamadı.</div>`;
+    }
+
+    function labelType(t){
+      return ({zirve:"Zirve", panel:"Panel", atolye:"Atölye", network:"Network"})[t] || "Etkinlik";
+    }
+    function labelMode(m){
+      return ({online:"Online", yuz_yuze:"Yüz yüze"})[m] || "Format";
+    }
+    function formatDate(iso){
+      const d = new Date(iso + "T00:00:00");
+      return d.toLocaleDateString("tr-TR", {year:"numeric", month:"long", day:"numeric"});
+    }
+    function escapeHtml(str){
+      return String(str ?? "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    qEl.addEventListener("input", render);
+    typeEl.addEventListener("change", render);
+    modeEl.addEventListener("change", render);
+    render();
+
+    // Contact form (demo)
+    const form = document.getElementById("contactForm");
+    const msg = document.getElementById("formMsg");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      msg.textContent = "Mesajınız alındı (demo). Canlıda bunu e-posta servisine veya Google Forms'a bağlarız.";
+      form.reset();
+    });
+  </script>
+</body>
+</html>
+```
